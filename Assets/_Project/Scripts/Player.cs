@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] float _initialSpeed;
     [SerializeField] float _speed = 5f;
+    [SerializeField] float _speedIncreased = 7f;
     [SerializeField] GameObject _laserPrefab;
     [SerializeField] GameObject _tripleShotPrefab;
     [SerializeField] float _laserOffSet = 1f;
@@ -12,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField] int _lives = 3;
     [SerializeField] int _currentLives = 0;
     [SerializeField] float _tripleShotActiveTime = 5f;
+    [SerializeField] float _speedIncreaseActiveTime = 4.5f;
+    [SerializeField] float _shieldsActivateTime = 6f;
 
     float _upperBounds = 0f;
     float _lowerBounds = -3.8f;
@@ -20,6 +24,8 @@ public class Player : MonoBehaviour
 
     float _canFire = -1f;
     bool _isTripleShotEnabled = false;
+    bool _isSpeedIncreased = false;
+    bool _isShieldEnabled = false;
 
     public static Player Instance;
 
@@ -28,6 +34,7 @@ public class Player : MonoBehaviour
     {
         Instance = this;
         _currentLives = _lives;
+        _initialSpeed = _speed;
     }
 
     void Start()
@@ -47,6 +54,15 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+
+        if (_isSpeedIncreased)
+        {
+            _speed = _speedIncreased;
+        }
+        else
+        {
+            _speed = _initialSpeed;
+        }
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
@@ -109,5 +125,29 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(_tripleShotActiveTime);
         _isTripleShotEnabled = false;
+    }
+
+    public void ActivateSpeed()
+    {
+        _isSpeedIncreased = true;
+        StartCoroutine(DeactivateSpeedIncrease());
+    }
+
+    IEnumerator DeactivateSpeedIncrease()
+    {
+        yield return new WaitForSeconds(_speedIncreaseActiveTime);
+        _isSpeedIncreased = false;
+    }
+
+    public void ActivateShields()
+    {
+        _isShieldEnabled = true;
+        StartCoroutine(DeactivateShields());
+    }
+
+    IEnumerator DeactivateShields()
+    {
+        yield return new WaitForSeconds(_shieldsActivateTime);
+        _isShieldEnabled = false;
     }
 }
