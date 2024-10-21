@@ -22,17 +22,20 @@ public class PowerUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (_powerupId == 0)
+            switch (_powerupId)
             {
-                Player.Instance.ActivateTripleShot();
-            }
-            else if (_powerupId == 1)
-            {
-                Player.Instance.ActivateSpeed();
-            }
-            else if (_powerupId == 2)
-            {
-                Player.Instance.ActivateShields();
+                case 0:
+                    Player.Instance.ActivateTripleShot();
+                    break;
+                case 1:
+                    Player.Instance.ActivateSpeed();
+                    break;
+                case 2:
+                    Player.Instance.ActivateShields();
+                    break;
+                default:
+                    Debug.Log("Default Powerup");
+                    break;
             }
             DestroyPowerup();
         }

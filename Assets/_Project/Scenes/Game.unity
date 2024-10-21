@@ -154,11 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7692cc1114dd0d44a991f1aa45e92bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialSpeed: 0
   _speed: 5
-  _speedIncrease: 2
+  _speedIncreased: 8.5
   _laserPrefab: {fileID: 19563363031674487, guid: 5d6fab1606a686146a8cbcebc9f90174, type: 3}
   _tripleShotPrefab: {fileID: 5610550276420260546, guid: fe2188deeb0f6a44ba69fdeae9f754ed, type: 3}
+  _shieldPrefab: {fileID: 3966108744490278816, guid: 9a7b9154b93b0cf4a8a7c0b4b0bd6fa7, type: 3}
   _laserOffSet: 0.8
   _fireRate: 0.15
   _lives: 3
@@ -525,18 +525,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 7454184483913113220, guid: c0426d6fabf59054e98f6a7b352b57dc, type: 3}
-  _tripleShotPowerUpPrefab: {fileID: 3962686160445880554, guid: eff0f3a2e87cd9b4bbb895a03ec4ad24, type: 3}
-  _speedUpPowerUpPrefab: {fileID: 2078899099416247212, guid: a90a1414adc87724ca3a27c0d351fbd8, type: 3}
-  _shieldsPowerUpPrefab: {fileID: 2607176775304857397, guid: 54310051d3bfc57448ed09ed4fdb65d5, type: 3}
+  _powerUps:
+  - {fileID: 3962686160445880554, guid: eff0f3a2e87cd9b4bbb895a03ec4ad24, type: 3}
+  - {fileID: 2078899099416247212, guid: a90a1414adc87724ca3a27c0d351fbd8, type: 3}
+  - {fileID: 2607176775304857397, guid: 54310051d3bfc57448ed09ed4fdb65d5, type: 3}
   _enemyContainer: {fileID: 701381347}
   _minTimeToSpawn: 3
   _maxTimeToSpawn: 6
-  _minTimeToSpawnTripleShot: 7.5
-  _maxTimeToSpawnTripleShot: 14.5
-  _minTimeToSpawnSpeedUp: 7.5
-  _maxTimeToSpawnSpeedUp: 14.5
-  _minTimeToSpawnShields: 7.5
-  _maxTimeToSpawnShields: 14.5
+  _minTimeToSpawnPowerup: 7.5
+  _maxTimeToSpawnPowerup: 14.5
   _minSpawnPositionX: -10.5
   _maxSpawnPositionX: 10.5
   _topBounds: 7.5

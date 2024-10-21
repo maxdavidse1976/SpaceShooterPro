@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float _initialSpeed;
+    
     [SerializeField] float _speed = 5f;
-    [SerializeField] float _speedIncreased = 7f;
+    [SerializeField] float _speedIncreased = 8.5f;
     [SerializeField] GameObject _laserPrefab;
     [SerializeField] GameObject _tripleShotPrefab;
+    [SerializeField] GameObject _shieldPrefab;
     [SerializeField] float _laserOffSet = 1f;
     [SerializeField] float _fireRate = 0.5f;
 
@@ -22,7 +23,9 @@ public class Player : MonoBehaviour
     float _leftBounds = -11.3f;
     float _rightBounds = 11.3f;
 
+    float _initialSpeed;
     float _canFire = -1f;
+    
     bool _isTripleShotEnabled = false;
     bool _isSpeedIncreased = false;
     bool _isShieldEnabled = false;
@@ -54,15 +57,6 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-
-        if (_isSpeedIncreased)
-        {
-            _speed = _speedIncreased;
-        }
-        else
-        {
-            _speed = _initialSpeed;
-        }
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
@@ -106,6 +100,11 @@ public class Player : MonoBehaviour
 
     public void DamagePlayer()
     {
+        if (_isShieldEnabled)
+        {
+            DestroyShield();
+            return;
+        }
         _currentLives--;
         if (_currentLives < 1)
         {
@@ -130,24 +129,34 @@ public class Player : MonoBehaviour
     public void ActivateSpeed()
     {
         _isSpeedIncreased = true;
+        _speed = _speedIncreased;
         StartCoroutine(DeactivateSpeedIncrease());
     }
 
     IEnumerator DeactivateSpeedIncrease()
     {
         yield return new WaitForSeconds(_speedIncreaseActiveTime);
+        _speed = _initialSpeed;
         _isSpeedIncreased = false;
     }
 
     public void ActivateShields()
     {
         _isShieldEnabled = true;
+        var shield = Instantiate(_shieldPrefab, transform.position, Quaternion.identity);
+        shield.transform.parent = transform;
         StartCoroutine(DeactivateShields());
     }
 
     IEnumerator DeactivateShields()
     {
         yield return new WaitForSeconds(_shieldsActivateTime);
+        Destroy(_shieldPrefab);
+        _isShieldEnabled = false;
+    }
+
+    public void DestroyShield()
+    {
         _isShieldEnabled = false;
     }
 }
